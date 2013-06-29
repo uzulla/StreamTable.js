@@ -21,7 +21,7 @@ $(document).ready(function() {
         }else{
           $found.hide();
         }
-       $summary.text( summary.from + ' to '+ summary.to +' of '+ summary.total +' entries');
+       $summary.text( summary.total + '件中、' + summary.from + '件目から'+ summary.to +'件目まで表示');
     }
   }
 
@@ -29,7 +29,13 @@ $(document).ready(function() {
     { view: view, 
       per_page: 10, 
       callbacks: callbacks,
-      pagination: {span: 5, next_text: 'Next &rarr;', prev_text: '&larr; Previous'}
+      pagination: {
+        span: 10,
+        next_text: '次 &gt;', 
+        prev_text: '&lt; 前',
+        first_text: '最初', 
+        last_text: '最後'
+       }
     },
    data
   );

@@ -77,3 +77,7 @@ ul.pagination{
   color: #8B0000;
 }
 
+.stream_table_settings_table input,select{
+  margin:0px !important;
+
+}

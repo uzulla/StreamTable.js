@@ -68,6 +68,8 @@
       span: 5,
       prev_text: '&laquo;',
       next_text: '&laquo;',
+      first_text: 'first',
+      last_text: 'last',
       per_page_select: true,
       per_page_opts: [10,25,50],
     }, opts);
@@ -300,7 +302,7 @@
         center = Math.ceil(span/2);
 
     if (page_count > span){
-      links.push('<li><a href="#" class="first">First</a></li>');
+      links.push('<li><a href="#" class="first">'+this.paging_opts.first_text+'</a></li>');
       if (current_page > (center - 1) ) i = current_page - center;
       if (current_page < (page_count - center - 1) ) l = i + span;
     }
@@ -317,7 +319,7 @@
 
     links.push('<li><a href="#" class="next">'+ this.paging_opts.next_text + '</a></li>');
 
-    if (page_count > this.paging_opts.span) links.push('<li><a href="#" class="last">Last</a></li>');
+    if (page_count > this.paging_opts.span) links.push('<li><a href="#" class="last">'+this.paging_opts.last_text+'</a></li>');
 
     links.push('</ul>');
     this.$pagination.html(links.join(''));
