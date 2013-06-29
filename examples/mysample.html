@@ -29,10 +29,12 @@
           </tr>
         </table>
 
+        <div id="summary" style="text-align:center;"></div>
         <div class="pagination"></div>
         <table id="stream_table" class='table table-striped table-bordered'>
           <thead>
             <tr>
+              <th><input type="checkbox" id="all_cb_control"></th>
               <th>#</th>
               <th>Name</th>
               <th>Director</th>
@@ -45,8 +47,6 @@
           </tbody>
         </table>
         <div class="pagination"></div>
-        
-        <div id="summary"><div>
       
       </div>
 
@@ -54,6 +54,7 @@
 
     <script id="template" type="text/html">
       <tr>
+        <td><input type="checkbox" name="st_cb_{{index}}" value="1" onchange='onClickSTCheck(event)'></td>
         <td>{{index}}</td>
         <td>{{record.name}}</td>
         <td>{{record.director}}</td>

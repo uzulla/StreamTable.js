@@ -266,6 +266,8 @@
 
   //Render table rows for given page
   _F.paginate = function(page){
+    this.execCallbacks('pagination_before');
+
     var page_count = this.pageCount();
 
     if(page == 'prev'){ 

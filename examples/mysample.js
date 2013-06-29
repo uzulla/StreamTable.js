@@ -1,7 +1,13 @@
 var st;
-$(document).ready(function() {
+var onClickSTCheck; // function
+var checkbox_data; // data.
 
+$(document).ready(function() {
   var data = Movies[0]; // data insert.
+
+  var checkbox_prefix = 'st_cb_';
+  var checkbox_prefix_reg =  new RegExp('^'+checkbox_prefix);
+  checkbox_data = {};
 
   var html = $.trim($("#template").html());
   var template = Mustache.compile(html);
@@ -14,15 +20,27 @@ $(document).ready(function() {
 
   $('#found').hide();
 
+
   var callbacks = {
+    pagination_before: function(){
+    },
     pagination: function(summary){
-        if ($.trim($('#st_search').val()).length > 0){
-          $found.text('Found : '+ summary.total).show();
-        }else{
-          $found.hide();
+      //save now check
+      $('input[name^='+checkbox_prefix+']').each(function(){
+        var elm = $(this);
+        var idx = elm.attr('name').replace(checkbox_prefix_reg, '');
+        if(checkbox_data[idx]){
+          elm.attr('checked', true);
         }
-       $summary.text( summary.total + '件中、' + summary.from + '件目から'+ summary.to +'件目まで表示');
-    }
+      });
+
+      if ($.trim($('#st_search').val()).length > 0){
+        $found.text('Found : '+ summary.total).show();
+      }else{
+        $found.hide();
+      }
+      $summary.text( summary.total + '件中、' + summary.from + '件目から'+ summary.to +'件目まで表示');
+    },
   }
 
   st = StreamTable('#stream_table',
@@ -40,8 +58,15 @@ $(document).ready(function() {
    data
   );
 
-  // Jquery plugin
-  //$('#stream_table').stream_table({view: view}, data)
+  onClickSTCheck = function (event){
+    var elm = $(event.target);
+    var idx = elm.attr('name').replace(checkbox_prefix_reg, '');
+    if(elm.prop('checked')){
+      checkbox_data[idx] = true;
+    }else{
+      checkbox_data[idx] = false;
+    }
+    console.log(checkbox_data);
+  }
 
 });
-
