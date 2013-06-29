@@ -73,13 +73,14 @@
     }, opts);
 
     this.paging_opts.per_page = this.paging_opts.per_page_opts[0] || 10;
-    this.paging_opts.container_class = ['st_pagination', opts.container_class].join(' ');
+    this.paging_opts.container_class = ['pagination', opts.container_class].join(' ');
     this.paging_opts.ul_class = ['pagination', opts.ul_class].join(' ');
     this.paging_opts.per_page_class = ['st_per_page', opts.per_page_class].join(' ');
     this.opts.pagination = this.paging_opts;
 
     $(this.main_container).after('<div class="'+ this.paging_opts.container_class  +'"></div>');
-    this.$pagination = $('.st_pagination'); 
+    $(this.main_container).before('<div class="'+ this.paging_opts.container_class  +'"></div>');
+    this.$pagination = $('.pagination');
   };
 
   _F.bindEvents = function(){
@@ -112,8 +113,8 @@
 
       current_page = _self.paginate(page);
       if (current_page >= 0) {
-        $('.st_pagination .active').removeClass('active');
-        $('.st_pagination li[data-page='+ current_page +']').addClass('active');
+        $('.pagination .active').removeClass('active');
+        $('.pagination li[data-page='+ current_page +']').addClass('active');
       }
 
       return false;
