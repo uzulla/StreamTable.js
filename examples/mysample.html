@@ -11,16 +11,16 @@
   </head>
   <body>
     <div class="container">
+
       <div class="title">
         <h1>StreamTable.js</span></h1>
       </div>
 
-
       <div class='example'>
-        <a href='#' id="add_more" class="btn btn-primary"><span class="glyphicon glyphicon-plus"> Add More Records</span></a>
-        <span id="spinner" class="glyphicon glyphicon-refresh"></span>
-        <a href="#" class='record_count'>Records <span class="badge"></span></a>
-        <span id="found" class="label label-info"></span>
+        <div id="quick_search_box"></div><div id="found" class="label label-info"></div>
+        <div class="pagination"></div>
+        <div id="per_page_box"></div>
+
         <table id="stream_table" class='table table-striped table-bordered'>
           <thead>
             <tr>
@@ -35,8 +35,12 @@
           <tbody>
           </tbody>
         </table>
+        <div class="pagination"></div>
+        
         <div id="summary"><div>
+      
       </div>
+
     </div>
 
     <script id="template" type="text/html">

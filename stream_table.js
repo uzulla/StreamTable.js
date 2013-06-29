@@ -78,8 +78,6 @@
     this.paging_opts.per_page_class = ['st_per_page', opts.per_page_class].join(' ');
     this.opts.pagination = this.paging_opts;
 
-    $(this.main_container).after('<div class="'+ this.paging_opts.container_class  +'"></div>');
-    $(this.main_container).before('<div class="'+ this.paging_opts.container_class  +'"></div>');
     this.$pagination = $('.pagination');
   };
 
@@ -124,7 +122,7 @@
 
   _F.addSearchBox = function(){
     if (this.opts.search_box) return;
-    $(this.main_container).before('<input name="search" type="text" id="st_search" class="st_search" placeholder="Type here...">');
+    $("#quick_search_box").html('<input name="search" type="text" id="st_search" class="st_search" placeholder="Type here...">');
     this.opts.search_box = '#st_search';
   };
 
@@ -338,7 +336,7 @@
         html.push('<option value="'+ arr[i] + '">'+ arr[i] +'</option>');
 
     html.push('</select>');
-    $(this.main_container).before(html.join(''));
+    $('#per_page_box').html(html.join(''));
   };
 
   _F.renderByPerPage = function(per_page){

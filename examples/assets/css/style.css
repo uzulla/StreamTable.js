@@ -32,12 +32,18 @@ body{
 
 .st_search{
   max-width: 200px;
-  float: right;
-  margin-bottom: 10px;
+  height:30px !important;
 }
 
-.pagination{
-  float: right;
+div.pagination{
+  width: 100%;
+  text-align: center;
+  margin-top: 0px;
+}
+
+ul.pagination{
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 0px;
 }
 
@@ -48,24 +54,14 @@ body{
 .st_per_page{
   width: 50px;
   height: 34px !important;
-  float: right;
-  margin-right: 20px;
 }
 
 .record_count {
   margin-left: 20px;
 }
 
-#spinner {
-  font-size: 18px;
-  margin-left: 10px;
-  display: none;
-}
-
 #found{
-  margin-left: 10px;
   font-size: 16px;
-  line-height: 33px;
 }
 
 .example .progress{
