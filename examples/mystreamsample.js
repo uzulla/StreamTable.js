@@ -54,8 +54,10 @@ $(document).ready(function () {
         on_fetch_error: function(){
             //Do you want retry? really? seriously?
             //this.fetchData();
-
             alert('ロードに失敗しました、リロードしてください。');
+        },
+        fetch_data_complete: function(){
+            alert('ロード完了しました！');
         }
     }
 
@@ -63,7 +65,7 @@ $(document).ready(function () {
         { view: view,
             per_page: 10,
             data_url: 'api.php',
-            stream_wait: 1,
+            stream_wait: 0,
             fetch_data_limit: 1000,
             callbacks: callbacks,
             pagination: {

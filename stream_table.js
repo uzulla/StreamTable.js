@@ -250,6 +250,8 @@
                   }else{
                       _self.fetchData();
                   }
+              }else{
+                  _self.execCallbacks('fetch_data_complete');
               }
           },
           error: function(){
