@@ -124,7 +124,7 @@
 
   _F.addSearchBox = function(){
     if (this.opts.search_box) return;
-    $("#quick_search_box").html('<input name="search" type="text" id="st_search" class="st_search" placeholder="Type here...">');
+    $("#quick_search_box").html('<input name="search" type="text" id="st_search" class="st_search" placeholder="入力してください">');
     this.opts.search_box = '#st_search';
   };
 
@@ -379,6 +379,18 @@
 
     return callback.call(this, args);
   };
+
+  _F.resetTable = function(){
+    console.log('resetTable');
+    this.current_page = 0;
+    if(this.last_search_text.length == 0){
+      this.render(this.data, this.current_page);
+    }else{
+      this.render(this.last_search_result, this.current_page);
+    }
+    this.renderPagination(this.pageCount(), this.current_page);
+    this.execCallbacks('pagination');
+  }
 
   StreamTable.extend = function (name, f ) {
     _StreamTable.prototype[name] = function () {

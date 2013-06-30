@@ -70,7 +70,6 @@ $(document).ready(function() {
       $('#all_cb_control').prop('checked', true);
     }else{
       delete checkbox_data[idx];
-
     }
     console.log(checkbox_data);
   }
@@ -83,27 +82,13 @@ $(document).ready(function() {
         for(var i=0; data_length>=i; i++){
           checkbox_data[i] = true;
         }
-        st.current_page = 0;
-        if(st.last_search_text.length == 0){
-          st.render(data, st.current_page);
-        }else{
-          st.render(st.last_search_result, st.current_page);
-        }
-        st.renderPagination(st.pageCount(), st.current_page);
-        st.execCallbacks('pagination');
+        st.resetTable();
       }
     }else{ // 全部つける処理
       if(confirm('すべてのチェックを外しますか？(現在のページ以外もチェックが外されます)')){
         //はずす
         checkbox_data = {};
-        st.current_page = 0;
-        if(st.last_search_text.length == 0){
-          st.render(data, st.current_page);
-        }else{
-          st.render(st.last_search_result, st.current_page);
-        }
-        st.renderPagination(st.pageCount(), st.current_page);
-        st.execCallbacks('pagination');    
+        st.resetTable();
       }
     }
   })
