@@ -1,25 +1,36 @@
 <?php
-//sample api
-$limit = 0+getParam('limit', '/\A[0-9]+\z/u');
-$offset = 0+getParam('offset', '/\A[0-9]+\z/u');
-//error_log($limit);
-//error_log($offset);
+//-- sample api
+define('DUMMY_DATA_LENGTH', 3000);
+
+try{
+    $limit = 0+getParam('limit', true, '/\A[0-9]+\z/');
+    $offset = 0+getParam('offset', true, '/\A[0-9]+\z/');
+}catch(Exception $e){
+    halt("Parameter error: ".$e->getMessage());
+}
+
 $data = genData($limit, $offset);
-//error_log(print_r($data,1));
 response_json($data);
 
-//------------
-function getParam($name, $checkRegExp=null){
+//-- functions
+function getParam($name, $require, $checkRegExp=null){
     if(isset($_REQUEST[$name])){
         $var = $_REQUEST[$name];
         if(!is_null($checkRegExp) && !preg_match($checkRegExp, $var)){
-            throw new Exception('Invalid params');
+            throw new Exception('Invalid format param:'.$name);
         }else{
             return $var;
         }
+    }elseif($require){
+        throw new Exception('Param require:'.$name);
     }else{
         return null;
     }
+}
+
+function halt($message='halt'){
+    header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+    die($message);
 }
 
 function response_json($data){
@@ -34,7 +45,7 @@ function response_json($data){
 function genData($limit=0, $offset=0){
     $return_array = array();
     for($i=0; $limit>$i; $i++){
-        if($offset+$i>1000){
+        if($offset+$i>=DUMMY_DATA_LENGTH){
             return $return_array;
         }
         $return_array[] = array(
