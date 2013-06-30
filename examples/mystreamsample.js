@@ -63,7 +63,7 @@ $(document).ready(function () {
         { view: view,
             per_page: 10,
             data_url: 'api.php',
-            stream_after: 0.5,
+            stream_after: 0,
             fetch_data_limit: 1000,
             callbacks: callbacks,
             pagination: {

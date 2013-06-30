@@ -40,7 +40,7 @@
     this.last_search_text = '';
     this.current_page = 0;
     this.textFunc = null;
-    this.stream_wait = (this.opts.stream_wait || 1)*1000;
+    this.stream_wait = this.opts.stream_wait*1000;
     this.timer = null;
     this.opts.callbacks = this.opts.callbacks || {};
 
@@ -242,10 +242,14 @@
                   return;
               }
               if(data && data.length>0 ){// one more!
-                  setTimeout(
-                      function(){_self.fetchData();},
-                      _self.stream_wait
-                  );
+                  if(_self.stream_wait){
+                      setTimeout(
+                          function(){_self.fetchData();},
+                          _self.stream_wait
+                      );
+                  }else{
+                      _self.fetchData();
+                  }
               }
           },
           error: function(){
