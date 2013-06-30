@@ -57,7 +57,7 @@ $(document).ready(function () {
         { view: view,
             per_page: 10,
             data_url: 'api.php',
-            stream_after: 0.1,
+            stream_after: 0.5,
             fetch_data_limit: 1000,
             callbacks: callbacks,
             pagination: {
@@ -87,9 +87,9 @@ $(document).ready(function () {
         if ($('#all_cb_control').prop('checked')) { // 全部外す処理
             if (confirm('すべてのチェックをつけますか？(現在のページ以外もチェックがされます)')) {
                 //つける
-                var data_length = data.length;
-                for (var i = 0; data_length >= i; i++) {
-                    checkbox_data[i] = true;
+                var data_length = st.data.length;
+                for (var i = 0; data_length > i; i++) {
+                    checkbox_data[st.data[i].id] = true;
                 }
                 st.resetTable();
             }
