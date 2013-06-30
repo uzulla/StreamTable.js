@@ -249,7 +249,7 @@
               }
           },
           error: function(){
-              alert('ロードに失敗しました、リロードしてください。');
+              _self.execCallbacks('on_fetch_error');
           },
           dataType: 'json'
       });

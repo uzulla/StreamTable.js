@@ -50,6 +50,12 @@ $(document).ready(function () {
                 this.render(this.data, 0);
                 $firstLoad = 0;
             }
+        },
+        on_fetch_error: function(){
+            //Do you want retry? really? seriously?
+            //this.fetchData();
+
+            alert('ロードに失敗しました、リロードしてください。');
         }
     }
 
