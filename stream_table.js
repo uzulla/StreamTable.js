@@ -40,7 +40,7 @@
     this.last_search_text = '';
     this.current_page = 0;
     this.textFunc = null;
-    this.stream_after = (this.opts.stream_after || 2)*1000;
+    this.stream_wait = (this.opts.stream_wait || 1)*1000;
     this.timer = null;
     this.opts.callbacks = this.opts.callbacks || {};
 
@@ -58,7 +58,7 @@
     }
 
     this.bindEvents();
-    this.streamData(this.stream_after);
+    this.streamData();
   }
 
   var _F = _StreamTable.prototype;
@@ -228,32 +228,42 @@
 
   _F.fetchData = function(){
     var _self = this, params = {q: this.last_search_text}
-
     if (this.opts.fetch_data_limit) {
-      params['limit'] = this.opts.fetch_data_limit;
-      params['offset'] = this.data.length;
+      $.ajax({
+         url:this.opts.data_url,
+         data: {
+             limit: _self.opts.fetch_data_limit,
+             offset:_self.data.length
+         },
+          beforeSend:function(){},
+          success:function(data){
+              var data = _self.addData(data);
+              if (_self.opts.fetch_data_limit == null){ // 一度しかクエリしない
+                  return;
+              }
+              if(data && data.length>0 ){// one more!
+                  setTimeout(
+                      function(){_self.fetchData();},
+                      _self.stream_wait
+                  );
+              }
+          },
+          error: function(){
+              alert('ロードに失敗しました、リロードしてください。');
+          },
+          dataType: 'json'
+      });
     }
-
-    $.getJSON(this.opts.data_url, params).done(function(data){
-      data = _self.addData(data);
-
-      if (params.limit != null && (!data || !data.length ) ) clearTimeout(_self.timer);
-    });
   };
 
   _F.clearTimer = function(){
     if (this.timer) clearTimeout(this.timer);
   };
 
-  _F.streamData = function(time){
+  _F.streamData = function(){
     if (!this.opts.data_url) return;
-    var _self = this, timer, timer_func;
-
-    timer_func = this.opts.fetch_data_limit ? setInterval : setTimeout;
-    _self.timer = timer_func(function(){
-      _self.fetchData();
-      if( !_self.opts.fetch_data_limit) clearTimeout(_self.timer);
-    }, time);
+    var _self = this;
+    _self.fetchData();
   };
 
   _F.pageCount = function(){
