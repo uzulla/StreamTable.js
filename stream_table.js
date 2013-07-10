@@ -71,7 +71,7 @@
       first_text: 'first',
       last_text: 'last',
       per_page_select: true,
-      per_page_opts: [10,25,50],
+      per_page_opts: [10,25,50]
     }, opts);
 
     this.paging_opts.per_page = this.paging_opts.per_page_opts[0] || 10;
@@ -174,6 +174,7 @@
       eles.push(this.view(data[i], (i+1)));
     
     this.$container.html(eles);
+    this.execCallbacks('renderAfter', this);
   };
 
   _F.search = function(text){
@@ -205,7 +206,28 @@
     return result;
   };
 
-  _F.addData = function(data){
+    _F.reloadData = function(data){
+        data = this.execCallbacks('before_add', data) || data;
+        this.text_index = [];
+        this.buildTextIndex(data);
+        this.data = data;
+        this.current_page = 0;
+
+        if (this.last_search_text.length > 0){
+            this.last_search_result = this.searchInData(this.last_search_text);
+            //TODO: Process search or sorting
+            this.render(this.last_search_result, this.current_page);
+        }else{
+            this.render(this.data, this.current_page);
+        }
+
+        this.renderPagination(this.pageCount(), this.current_page);
+        this.execCallbacks('after_add');
+        this.execCallbacks('pagination');
+    };
+
+
+    _F.addData = function(data){
     data = this.execCallbacks('before_add', data) || data;
 
     if (data.length){
